@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/components/tasks_tile.dart';
-import 'package:todo/modules/tasks.dart';
-import 'package:todo/screens/task_screen.dart';
+import 'package:todo/modules/task_data.dart';
 
-TasksScreen tasksScreen = TasksScreen();
-
-class TasksList extends StatefulWidget {
+class TasksList extends StatelessWidget {
   const TasksList({
     Key? key,
-    required this.task,
   }) : super(key: key);
 
-  final List<Task> task;
-
-  @override
-  State<TasksList> createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return TasksTile(text: widget.task[index].name);
+    return Consumer<TaskData>(
+      builder: (BuildContext context, taskData, Widget? child) {
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return TasksTile(
+                text: taskData.task[index].name);
+          },
+          itemCount: taskData.taskCount,
+        );
       },
-      itemCount: widget.task.length,
     );
   }
 }

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/components/tasks_list.dart';
+import 'package:todo/modules/task_data.dart';
 import 'package:todo/modules/tasks.dart';
 import 'package:todo/screens/add_tasks_screen.dart';
 
-class TasksScreen extends StatefulWidget {
-  const TasksScreen({Key? key}) : super(key: key);
+class TasksScreen extends StatefulWidget with ChangeNotifier {
+  TasksScreen({Key? key}) : super(key: key);
 
   @override
   State<TasksScreen> createState() => _TasksScreenState();
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<Task> task = [];
 
   String tasks(int number){
     if (number<2){
@@ -57,7 +57,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  tasks(task.length),
+                  tasks(Provider.of<TaskData>(context).taskCount),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -76,7 +76,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(task: task),
+              child: const TasksList(),
             ),
           ),
         ],
@@ -91,14 +91,7 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTasksScreen(
-                  addTaskCallBack: (newTaskCallBack) {
-                    setState(() {
-                      task.add(Task(name:newTaskCallBack));
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
+                child: AddTasksScreen(),
               ),
             ),
           );

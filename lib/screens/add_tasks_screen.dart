@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo/modules/tasks.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/modules/task_data.dart';
 
 class AddTasksScreen extends StatelessWidget {
-  AddTasksScreen({Key? key, required this.addTaskCallBack}) : super(key: key);
+  AddTasksScreen({Key? key}) : super(key: key);
 
-  final Function addTaskCallBack;
   String? myTask;
 
   @override
@@ -46,7 +46,8 @@ class AddTasksScreen extends StatelessWidget {
             const SizedBox(height: 5,),
             TextButton(
               onPressed:() {
-                addTaskCallBack(myTask);
+                Provider.of<TaskData>(context,listen: false).updateTaskName(newTaskName: myTask!);
+                Navigator.pop(context);
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.lightBlueAccent,
