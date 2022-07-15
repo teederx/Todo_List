@@ -13,12 +13,10 @@ class TasksScreen extends StatefulWidget with ChangeNotifier {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-
-  String tasks(int number){
-    if (number<2){
+  String tasks(int number) {
+    if (number < 2) {
       return '$number task';
-    }
-    else{
+    } else {
       return '$number tasks';
     }
   }
